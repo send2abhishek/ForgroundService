@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Forground Service</string>
+
+    <string name="content">
+
+        The Redmi Note 7 Pro runs MIUI 10 based on Android Pie and packs
+        64GB of inbuilt storage
+        that can be expanded via microSD card.
+        The Redmi Note 7 Pro is a dual-SIM (GSM and GSM) smartphone
+        that accepts Nano-SIM and Nano-SIM cards
+    </string>
+</resources>

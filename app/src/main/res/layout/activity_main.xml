@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="14dp"
+    android:padding="8dp"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:id="@+id/activity_main_title"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Notification Desc"
+        android:id="@+id/activity_main_desc"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Notification 1"
+        android:textAllCaps="false"
+        android:onClick="Notification1"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        android:padding="6dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Notification 2"
+        android:textAllCaps="false"
+        android:onClick="Notification2"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        android:padding="6dp"
+        android:layout_marginTop="6dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Notification 3"
+        android:textAllCaps="false"
+        android:onClick="Notification3"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        android:padding="6dp"
+        android:layout_marginTop="6dp"
+        />
+
+</LinearLayout>
