@@ -8,12 +8,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import static com.attra.forgroundservice.MyApp.CHANNEL1_ID;
 import static com.attra.forgroundservice.MyApp.CHANNEL2_ID;
@@ -25,13 +38,111 @@ public class MainActivity extends AppCompatActivity {
     private EditText desc;
     private NotificationManagerCompat managerCompat;
 
+    private EditText username;
+    private EditText passoword;
+    private ProgressBar progressBar;
+    private Button signUpbtn;
+
+    private FirebaseAuth mauth;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mauth=FirebaseAuth.getInstance();
         title = findViewById(R.id.activity_main_title);
         desc = findViewById(R.id.activity_main_desc);
+        username=findViewById(R.id.activity_main_username);
+        passoword=findViewById(R.id.activity_main_password);
+        progressBar=findViewById(R.id.activity_main_progressbar);
         managerCompat = NotificationManagerCompat.from(this);
+        signUpbtn=findViewById(R.id.activity_main_signup);
+        signUpbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SignUp();
+            }
+        });
+    }
+
+    private void SignUp() {
+
+        final String user=username.getText().toString().trim();
+        final String pass=passoword.getText().toString().trim();
+        progressBar.setVisibility(View.VISIBLE);
+        mauth.createUserWithEmailAndPassword(user,pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+
+                        if(task.isSuccessful()){
+                            progressBar.setVisibility(View.GONE);
+                            StartProfileActivity();
+                        }
+
+                        else {
+                                // Email provided already present in the database
+                            if(task.getException() instanceof FirebaseAuthUserCollisionException){
+
+                                SignInAction(user,pass);
+                            }
+                            else {
+
+                                // If exception is something else we will display a msg
+                                progressBar.setVisibility(View.GONE);
+                                Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                    }
+                });
+    }
+
+    private void SignInAction(String user, String pass) {
+
+        mauth.signInWithEmailAndPassword(user,pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if(task.isSuccessful()){
+                            StartProfileActivity();
+                            progressBar.setVisibility(View.GONE);
+                        }
+                        else {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+
+    }
+
+    private void StartProfileActivity() {
+
+        Toast.makeText(this,"Profile Activity",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+
+                        if(task.isSuccessful()){
+
+                            String token=task.getResult().getToken();
+
+                        }
+
+                    }
+                });
     }
 
     public void Notification1(View view) {

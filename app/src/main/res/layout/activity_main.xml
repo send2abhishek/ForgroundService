@@ -7,8 +7,37 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_margin="14dp"
-    android:padding="8dp"
+    android:padding="12dp"
     tools:context=".MainActivity">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:id="@+id/activity_main_username"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:id="@+id/activity_main_password"
+        />
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SignUp"
+        android:id="@+id/activity_main_signup"
+        />
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_main_progressbar"
+        android:visibility="gone"
+        />
 
     <EditText
         android:layout_width="match_parent"
