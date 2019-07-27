@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.attra.forgroundservice.Activities.profileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -124,25 +125,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void StartProfileActivity() {
 
-        Toast.makeText(this,"Profile Activity",Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(this, profileActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
 
-                        if(task.isSuccessful()){
+        if(mauth.getCurrentUser()!=null){
+            StartProfileActivity();
+        }
 
-                            String token=task.getResult().getToken();
-
-                        }
-
-                    }
-                });
     }
 
     public void Notification1(View view) {
